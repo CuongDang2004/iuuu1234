@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Câu hỏi Đúng/Sai</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .container, .new-content, .third-content {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 208px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            max-width: 900px;
+            width: 90%;
+            margin: 0 auto;
+            display: none; /* Ẩn tất cả các phần ban đầu */
+        }
+        h1, h2 {
+            color: #333;
+        }
+        button {
+            background-color: #f091c5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #ff0aad;
+        }
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 17px;
+        }
+        .toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+        @keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+        }
+        @keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+        .heart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Chiều cao toàn màn hình */
+            padding: 0; /* Loại bỏ padding xung quanh trái tim */
+        }
+        #heart {
+            width: 500px; /* Kích thước trái tim */
+            height: 500px; /* Kích thước trái tim */
+            position: relative;
+            animation: heartbeat 1.5s infinite;
+        }
+        #heart:before, #heart:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 250px; /* Kích thước */
+            height: 400px; /* Kích thước */
+            border-radius: 125px 125px 0 0; /* Bo tròn các góc */
+            background: #FF5CA4;
+        }
+        #heart:before {
+            left: 250px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+        #heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+    </style>
+    <script>
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.className = "toast show";
+            setTimeout(function() {
+                toast.className = toast.className.replace("show", "");
+            }, 3000);
+        }
+
+        function checkAnswer(isCorrect, event) {
+            if (isCorrect) {
+                document.querySelector('.container').style.display = 'none';
+                document.querySelector('.new-content').style.display = 'block';
+            } else {
+                const button = event.target;
+                const currentX = button.offsetLeft;
+                const currentY = button.offsetTop;
+                const offsetX = (Math.random() * 10 + 70) * (Math.random() < 0.5 ? -1 : 1);
+                const offsetY = (Math.random() * 10 + 70) * (Math.random() < 0.5 ? -1 : 1);
+                button.style.position = 'absolute';
+                button.style.left = `${currentX + offsetX}px`;
+                button.style.top = `${currentY + offsetY}px`;
+                showToast();
+            }
+        }
+
+        function goToThirdPage() {
+            document.querySelector('.new-content').style.display = 'none';
+            document.querySelector('.third-content').style.display = 'block';
+        }
+
+        window.onload = function() {
+            document.querySelector('.container').style.display = 'block'; // Hiển thị trang đầu tiên
+        };
+    </script>
+</head>
+<body style="background:url(https://inkythuatso.com/uploads/thumbnails/800/2023/02/hinh-nen-mau-trang-hong-don-gian-4-27-13-31-38.jpg);">
+    
+    <div class="container">
+        <h1>Làm Ny tui hăm ??? </h1>
+        <button onclick="checkAnswer(true)">Coá</button>
+        <button onclick="checkAnswer(false, event)">Honggg</button>
+    </div>
+
+    <div class="new-content">
+        <h2> Bấm zô ik :33 iu nhắm mới cho ấn ó </h2>
+        <button onclick="goToThirdPage()">Bấm vô</button>
+    </div>
+
+    <div class="third-content">
+        <h2>Trang trống thứ 3!</h2>
+        <p>Iu nhắm á nha<33.</p>
+        <div class="heart-container">
+            <div id="heart"></div> <!-- Trái tim đập -->
+        </div>
+    </div>
+
+    <div id="toast" class="toast">Đừng cố chấp =))</div>
+</body>
+</html>
